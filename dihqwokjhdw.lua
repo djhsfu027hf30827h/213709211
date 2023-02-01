@@ -30,7 +30,7 @@ Tab:AddTextbox({
 	Callback = function(Value)
 		
         
-        if Value == "tEI5nXy%d&a6qAm8q" then
+        if Value == "dx$ZNVB@855Rme6h" then
            
 
 
@@ -302,7 +302,7 @@ Tab:AddTextbox({
 	Default = "",
 	TextDisappear = true,
 	Callback = function(Value)
-		game:GetService("Players").helIoGoofygoobers.PlayerGui.Menu.click.SoundId = Value
+		game:GetService("Players").LocalPlayer.PlayerGui.Menu.click.SoundId = Value
 	end	  
 })
 

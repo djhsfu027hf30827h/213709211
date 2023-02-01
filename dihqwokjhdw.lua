@@ -49,87 +49,32 @@ local Section = Tab:AddSection({
 })
 
 
-local Players = game:GetService("Players")
-local plr = Players.LocalPlayer
-local char = plr.Character
-local humr = char:WaitForChild("HumanoidRootPart")
-local hum = char:WaitForChild("Humanoid")
 local BlockedRemotes = {
-   "AC",
+    "AC",
 }
 
 local Events = {
-   Fire = true,
-   Invoke = true,
-   FireServer = true,
-   InvokeServer = true,
-   InvokeOnClient = true,
-   OnClientEvent = true,
+    Fire = true, 
+    Invoke = true, 
+    FireServer = true, 
+    InvokeServer = true,
 }
-local function GET_NAME(P)
-   if tostring(P):match("BubbleChat") then
-       return true
-   end
-end
-   task.wait(3)
-   local success,error = pcall(function()
-   for i,v in pairs(getgc()) do
-       if getfenv(v).script and GET_NAME(getfenv(v).script) then
-           if typeof(v) == "function" and BlockedRemotes and "BubbleChat" then
-               for x,c in pairs(debug.getupvalues(v)) do
-                   debug.setupvalue(v,x,nil)
-               end
-               for x,c in pairs(debug.getconstants(v)) do
-                   debug.setconstant(v,x,game.Workspace)
-               end
-               for x,c in pairs(debug.getconstants(v)) do
-                   debug.setupvalue(v,1,game.Workspace)
-               end
-           end
-       end
-   end
-end)
 
 local gameMeta = getrawmetatable(game)
 local psuedoEnv = {
-   ["__index"] = gameMeta.__index,
-   ["__namecall"] = gameMeta.__namecall;
+    ["__index"] = gameMeta.__index,
+    ["__namecall"] = gameMeta.__namecall;
 }
 setreadonly(gameMeta, false)
 gameMeta.__index, gameMeta.__namecall = newcclosure(function(self, index, ...)
-   if Events[index] then
-       for i,v in pairs(BlockedRemotes) do
-           if v == self.Name and not checkcaller() and getcallingscripts() then
-           return nil and game.workspace:waitForChild("never gonna exist")
-       end
-       end
-   end
-   return psuedoEnv.__index(self, index, ...)
+    if Events[index] then
+        for i,v in pairs(BlockedRemotes) do
+            if v == self.Name and not checkcaller() then return nil end
+        end
+    end
+    return psuedoEnv.__index(self, index, ...)
 end)
 setreadonly(gameMeta, true)
-local ToBypass = {
-   getconnections(hum.Changed),
-   getconnections(hum:GetPropertyChangedSignal("WalkSpeed")),
-   getconnections(hum:GetPropertyChangedSignal("JumpPower")),
-   getconnections(char.DescendantAdded),
-   getconnections(humr.DescendantAdded),
-   getconnections(humr.ChildAdded),
-}
-local function BypassConnections()
-   for i,v in pairs(ToBypass) do
-       for i,v in pairs(v) do
-           v:Disable()
-       end
-   end
-end
-plr.CharacterAdded:Connect(function(newChar)
-   char = newChar
-   humr = newChar:WaitForChild("HumanoidRootPart")
-   hum = newChar:WaitForChild("Humanoid")
-   BypassConnections()
-end)
-
-BypassConnections()
 
 
 Tab:AddTextbox({

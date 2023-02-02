@@ -30,7 +30,7 @@ Tab:AddTextbox({
 	Callback = function(Value)
 		
         
-        if Value == "dx$ZNVB@855Rme6h" then
+        if Value == "tEI5nXy%d&a6qAm8q" then
            
 
 
@@ -120,9 +120,7 @@ Tab:AddTextbox({
 	Default = "Player name",
 	TextDisappear = true,
 	Callback = function(Value)
-        local Pan = "Create"
-
-        game:GetService("Players").LocalPlayer.Backpack.Ladder.Event:FireServer(Pan)
+      
         local target = game.Players[Value] -- replace "Username Here" with the person you want to kick
 
 

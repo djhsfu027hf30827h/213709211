@@ -48,8 +48,8 @@ local Section = Tab:AddSection({
 	Name = "General"
 })
 
-local plrname = game.Players.LocalPlayer.Name
-game.Workspace[plrname]["Anti-Cheat"]:Destroy()
+
+
 
 Tab:AddTextbox({
 	Name = "Jump Power",
@@ -60,7 +60,12 @@ Tab:AddTextbox({
 	end	  
 })
 
-
+Tab:AddButton({
+	Name = "remove anti cheat",
+	Callback = function()
+       game.Workspace[plrname]["Anti-Cheat"]:Destroy()
+  	end    
+})
 
 
 

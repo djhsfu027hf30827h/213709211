@@ -51,31 +51,18 @@ local Section = Tab:AddSection({
 
 
 
-Tab:AddTextbox({
-	Name = "Jump Power",
-	Default = "",
-	TextDisappear = true,
-	Callback = function(Value)
-		game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
-	end	  
-})
-
 Tab:AddButton({
 	Name = "remove anti cheat",
 	Callback = function()
        game.Workspace[plrname]["Anti-Cheat"]:Destroy()
+game:GetService("StarterPlayer").StarterCharacterScripts["Anti-Cheat"]:Destroy()
   	end    
 })
 
 
 
 
-Tab:AddButton({
-	Name = "jump",
-	Callback = function()
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-  	end    
-})
+
 
 
 
@@ -167,24 +154,7 @@ Tab:AddSlider({
 })
 
 
-Tab:AddToggle({
-	Name = "Infinite Jump",
-	Default = false,
-	Callback = function(Value)
-		if Value == true then
-            infiniteJump = true
-            USI.JumpRequest:Connect(function()
-		if infiniteJump == true then
-			game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
-            game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-		end
-	end)
-        elseif Value == false then
-            infiniteJump = false
-        
-        end
-	end 
-})
+
 
 
 

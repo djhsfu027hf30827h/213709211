@@ -351,14 +351,7 @@ Tab:AddButton({
 
 
 
-Tab:AddButton({
-	Name = "Loop Fling (made by: digitality)",
-	Callback = function()
-		
-		loadstring(game:HttpGet('https://github.com/DigitalityScripts/roblox-scripts/raw/main/loop%20fling%20all'))()
 
-  	end    
-})
 
 Tab:AddButton({
 	Name = "CMD X",

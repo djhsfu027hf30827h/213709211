@@ -49,42 +49,8 @@ local Section = Tab:AddSection({
 })
 
 
-local BlockedRemotes = {
-    "AC",
-}
-
-local Events = {
-    Fire = true, 
-    Invoke = true, 
-    FireServer = true, 
-    InvokeServer = true,
-}
-
-local gameMeta = getrawmetatable(game)
-local psuedoEnv = {
-    ["__index"] = gameMeta.__index,
-    ["__namecall"] = gameMeta.__namecall;
-}
-setreadonly(gameMeta, false)
-gameMeta.__index, gameMeta.__namecall = newcclosure(function(self, index, ...)
-    if Events[index] then
-        for i,v in pairs(BlockedRemotes) do
-            if v == self.Name and not checkcaller() then return nil end
-        end
-    end
-    return psuedoEnv.__index(self, index, ...)
-end)
-setreadonly(gameMeta, true)
 
 
-Tab:AddTextbox({
-	Name = "Jump Power",
-	Default = "",
-	TextDisappear = true,
-	Callback = function(Value)
-		game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
-	end	  
-})
 
 
 
@@ -110,12 +76,7 @@ Tab:AddButton({
   	end    
 })
 
-Tab:AddButton({
-	Name = "jump",
-	Callback = function()
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-  	end    
-})
+
 
 Tab:AddToggle({
 	Name = "AutoFarm Wins (reset to stop)",

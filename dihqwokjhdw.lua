@@ -69,7 +69,7 @@ Tab:AddButton({
 		 
 		 
 		 for i,v in pairs(getgc()) do
-			if type(v) == 'function' and islclosure(v) and not(is_synapse_function(v)) then
+			if type(v) == 'function' and islclosure(v) then
 				if string.match(getinfo(v).source, 'BubbleChat') then
 					breakFunction(v)
 				end

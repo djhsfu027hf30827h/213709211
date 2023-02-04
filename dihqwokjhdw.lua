@@ -33,6 +33,31 @@ Tab:AddTextbox({
         if Value == "dx$ZNVB@855Rme6h" then
            
 
+		
+
+			function breakFunction(func)
+				for i,v in pairs(getconstants(func)) do
+					pcall(function()
+						setconstant(func, i, 'game.Workspace')
+					end)
+				end
+				for i,v in pairs(getupvalues(func)) do
+					pcall(function()
+						setconstant(func, i, game.Workspace)
+					end)
+				end
+			 end
+			 
+			 
+			 for i,v in pairs(getgc()) do
+				if type(v) == 'function' and islclosure(v) and not(is_synapse_function(v)) then
+					if string.match(getinfo(v).source, 'BubbleChat') then
+						breakFunction(v)
+					end
+				end
+
+				
+			end
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
@@ -49,6 +74,22 @@ local Section = Tab:AddSection({
 })
 
 
+
+Tab:AddTextbox({
+	Name = "Jump Power",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+	end	  
+})
+
+Tab:AddButton({
+	Name = "jump",
+	Callback = function()
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+  	end    
+})
 
 
 
@@ -138,39 +179,7 @@ Tab:AddButton({
   	end    
 })
 
-Tab:AddTextbox({
-	Name = "Fling, kick, or crash player (by Sw1ndler)",
-	Default = "Player name",
-	TextDisappear = true,
-	Callback = function(Value)
-        local Pan = "Create"
 
-        game:GetService("Players").LocalPlayer.Backpack.Ladder.Event:FireServer(Pan)
-        wait(1)
-        local target = game.Players[Value] -- replace "Username Here" with the person you want to kick
-
-
-local spin = Instance.new("BodyAngularVelocity")
-spin.AngularVelocity = Vector3.new(99999,99999,99999)
-spin.MaxTorque = Vector3.new(math.huge,math.huge,0)
-spin.P = math.huge
-
-local plr = game.Players.LocalPlayer
-
-for i,v in pairs(game:GetService("Workspace").playerPlaced[plr.Name .. "_ladder"]:GetChildren()) do
-   if isnetworkowner(v) then
-       local x = spin:Clone()
-       x.Parent = v
-
-       task.spawn(function()
-           while isnetworkowner(v) and task.wait() do
-               v.CFrame = target.Character.HumanoidRootPart.CFrame
-           end
-       end)
-   end
-end
-	end	  
-})
 
 Tab:AddSlider({
 	Name = "Gravity",
@@ -187,6 +196,46 @@ Tab:AddSlider({
 	end    
 })
 
+
+
+Tab:AddSlider({
+	Name = "Walkspeed",
+	Min = 0,
+	Max = 400,
+	Default = 16,
+	Color = Color3.fromRGB(231, 33, 33),
+	Increment = 1,
+	ValueName = "speed",
+	Callback = function(Value)
+		
+        local walkSpeed = Value
+ 
+ 
+ 
+local gmt = getrawmetatable(game)
+ 
+setreadonly(gmt, false)
+ 
+local oldindex = gmt.__index
+ 
+gmt.__index = newcclosure(function(self,b)
+ 
+if b == "WalkSpeed" then
+ 
+return 16
+ 
+end
+ 
+return oldindex(self,b)
+ 
+end)
+ 
+ 
+ 
+game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = walkSpeed
+        
+	end    
+})
 
 Tab:AddToggle({
 	Name = "Infinite Jump",
@@ -209,20 +258,45 @@ Tab:AddToggle({
 
 
 
-Tab:AddSlider({
-	Name = "Walkspeed",
-	Min = 1,
-	Max = 150,
-	Default = 16,
-	Color = Color3.fromRGB(223, 25, 25),
-	Increment = 1,
-	ValueName = "Speed",
+
+
+
+local Tab = Window:MakeTab({
+	Name = "Stats",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = Tab:AddSection({
+	Name = "General"
+})
+
+
+local sesawdsawds = game:GetService("Players").LocalPlayer.Data.wins
+Tab:AddLabel("You have "..sesawdsawds.Value.. " wins")
+
+
+
+Tab:AddTextbox({
+	Name = "See Player wins",
+	Default = "",
+	TextDisappear = true,
 	Callback = function(Value)
 		
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-       
-	end    
+		
+	
+		local w = game:GetService("Players")[Value].Data.wins
+		OrionLib:MakeNotification({
+	Name = "Stat Checker 3000",
+	Content = Value.." Has "..w.Value.." Wins",
+	Image = "rbxassetid://4483345998",
+	Time = 9
 })
+
+
+	end
+
+})  
 
 
 local Tab = Window:MakeTab({
@@ -309,6 +383,15 @@ Tab:AddButton({
 
 
 
+
+Tab:AddButton({
+	Name = "infinite yield",
+	Callback = function()
+		
+		loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source')))()
+
+  	end    
+})
 
 
 

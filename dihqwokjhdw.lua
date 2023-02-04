@@ -51,10 +51,7 @@ local Section = Tab:AddSection({
 	Name = "General"
 })
 
-Tab:AddButton({
-	Name = "remove ac",
-	Callback = function()
-        function breakFunction(func)
+function breakFunction(func)
 			for i,v in pairs(getconstants(func)) do
 				pcall(function()
 					setconstant(func, i, 'game.Workspace')
@@ -77,8 +74,6 @@ Tab:AddButton({
 		
 			
 		end
-  	end    
-})
 
 
 Tab:AddTextbox({
